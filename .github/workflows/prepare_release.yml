@@ -26,8 +26,14 @@ jobs:
         run: python -m build
       - name: Verify build
         run: twine check dist/*
+      - name: Create build archive
+        uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          files: dist
+          outPath: spdx_tools_dist.tar.gz
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/*
+          files: spdx_tools_dist.tar.gz
           generate_release_notes: true
